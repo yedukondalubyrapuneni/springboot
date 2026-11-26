@@ -5,151 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Developer Task Manager - Full Stack CRUD</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background-color: #f4f6f9;
-            color: #333;
-            padding: 30px 15px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; padding: 30px 15px; }
+        .container { max-width: 960px; margin: 0 auto; }
         header {
-            background: #1e293b;
-            color: #fff;
-            padding: 20px 25px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: #1e293b; color: #fff; padding: 20px 25px;
+            border-radius: 10px; margin-bottom: 25px;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        header h1 {
-            font-size: 1.4rem;
-        }
-        .badge-env {
-            background: #3b82f6;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-        }
+        header h1 { font-size: 1.35rem; }
+        .badge-env { background: #3b82f6; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; }
         .card {
-            background: #fff;
-            padding: 22px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            margin-bottom: 25px;
+            background: #fff; padding: 22px; border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); margin-bottom: 22px;
         }
-        .card h2 {
-            font-size: 1.15rem;
-            margin-bottom: 15px;
-            color: #1e293b;
-        }
+        .card h2 { font-size: 1.1rem; margin-bottom: 15px; color: #1e293b; }
         .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr 1fr auto;
-            gap: 12px;
-            align-items: end;
+            display: grid; grid-template-columns: 1fr 1.5fr 1fr auto;
+            gap: 12px; align-items: end;
+        }
+        .filter-bar {
+            display: grid; grid-template-columns: 1.5fr 1fr auto;
+            gap: 12px; margin-bottom: 16px;
         }
         @media (max-width: 720px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
+            .form-grid, .filter-bar { grid-template-columns: 1fr; }
         }
-        label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #475569;
-        }
+        label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 5px; color: #475569; }
         input, select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 0.95rem;
+            width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1;
+            border-radius: 6px; font-size: 0.92rem;
         }
-        input:focus, select:focus {
-            outline: none;
-            border-color: #3b82f6;
-        }
-        .btn-group {
-            display: flex;
-            gap: 8px;
-        }
+        input:focus, select:focus { outline: none; border-color: #3b82f6; }
+        .btn-group { display: flex; gap: 8px; }
         button {
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
+            padding: 10px 16px; border: none; border-radius: 6px;
+            font-size: 0.9rem; font-weight: 600; cursor: pointer;
         }
-        button:hover {
-            opacity: 0.9;
-        }
-        .btn-primary {
-            background: #2563eb;
-            color: #fff;
-        }
-        .btn-cancel {
-            background: #64748b;
-            color: #fff;
-            display: none;
-        }
-        .btn-edit {
-            background: #f59e0b;
-            color: #fff;
-            padding: 6px 12px;
-            font-size: 0.82rem;
-        }
-        .btn-delete {
-            background: #ef4444;
-            color: #fff;
-            padding: 6px 12px;
-            font-size: 0.82rem;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            text-align: left;
-            padding: 12px 14px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        th {
-            background: #f8fafc;
-            color: #475569;
-            font-size: 0.85rem;
-            text-transform: uppercase;
+        button:hover { opacity: 0.9; }
+        .btn-primary { background: #2563eb; color: #fff; }
+        .btn-secondary { background: #475569; color: #fff; }
+        .btn-cancel { background: #64748b; color: #fff; display: none; }
+        .btn-edit { background: #f59e0b; color: #fff; padding: 6px 12px; font-size: 0.82rem; }
+        .btn-delete { background: #ef4444; color: #fff; padding: 6px 12px; font-size: 0.82rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid #e2e8f0; }
+        th { background: #f8fafc; color: #475569; font-size: 0.82rem; text-transform: uppercase; }
+        .dev-tag {
+            display: inline-block; font-size: 0.75rem; background: #f1f5f9;
+            color: #475569; padding: 2px 7px; border-radius: 4px; margin-left: 6px;
         }
         .status-pill {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            background: #e0f2fe;
-            color: #0369a1;
+            display: inline-block; padding: 4px 10px; border-radius: 12px;
+            font-size: 0.8rem; font-weight: 600; background: #e0f2fe; color: #0369a1;
         }
-        .status-completed {
-            background: #dcfce7;
-            color: #15803d;
-        }
-        .empty-msg {
-            text-align: center;
-            padding: 25px;
-            color: #64748b;
-        }
+        .status-completed { background: #dcfce7; color: #15803d; }
+        .empty-msg { text-align: center; padding: 25px; color: #64748b; }
     </style>
 </head>
 <body>
@@ -172,7 +83,7 @@
                 </div>
                 <div>
                     <label for="taskName">Task Description</label>
-                    <input type="text" id="taskName" placeholder=" REST API" required>
+                    <input type="text" id="taskName" placeholder="e.g. Build REST API" required>
                 </div>
                 <div>
                     <label for="status">Status</label>
@@ -191,14 +102,26 @@
         </form>
     </div>
 
-    <!-- READ / EDIT / DELETE TABLE -->
+    <!-- SEARCH, FILTER & TABLE -->
     <div class="card">
         <h2>Saved Tasks in MySQL</h2>
+
+        <div class="filter-bar">
+            <input type="text" id="searchInput" placeholder="Search tasks by keyword..." oninput="handleSearch()">
+            <select id="statusFilter" onchange="handleStatusFilter()">
+                <option value="">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+            </select>
+            <button type="button" class="btn-secondary" onclick="clearFilters()">Reset Filters</button>
+        </div>
+
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Developer</th>
+                    <th>Developer (FK)</th>
                     <th>Task</th>
                     <th>Status</th>
                     <th>Actions</th>
@@ -214,59 +137,86 @@
 <script>
     const API_URL = '/api/tasks';
 
-    // Load build info and all tasks on page open
     document.addEventListener('DOMContentLoaded', () => {
         loadBuildEnv();
-        fetchTasks();
+        fetchTasks(API_URL);
     });
 
     async function loadBuildEnv() {
         try {
             const res = await fetch('/api/build');
-            const text = await res.text();
-            document.getElementById('buildEnv').textContent = text;
-        } catch (err) {
+            document.getElementById('buildEnv').textContent = await res.text();
+        } catch {
             document.getElementById('buildEnv').textContent = 'Backend Offline';
         }
     }
 
-    // 1. READ ALL (GET)
-    async function fetchTasks() {
+    async function fetchTasks(url) {
         const tbody = document.getElementById('taskTableBody');
         try {
-            const response = await fetch(API_URL);
+            const response = await fetch(url);
             const tasks = await response.json();
 
             if (tasks.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="empty-msg">No tasks found in MySQL. Add one above!</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="empty-msg">No matching tasks found in MySQL.</td></tr>';
                 return;
             }
 
-            tbody.innerHTML = tasks.map(task => `
-                <tr>
-                    <td>#${task.id}</td>
-                    <td><strong>${escapeHtml(task.developerName)}</strong></td>
-                    <td>${escapeHtml(task.taskName)}</td>
-                    <td>
-                        <span class="status-pill ${task.status === 'Completed' ? 'status-completed' : ''}">
-                            ${escapeHtml(task.status || '')}
-                        </span>
-                    </td>
-                    <td>
-                        <button class="btn-edit" onclick="editTask(${task.id})">Edit</button>
-                        <button class="btn-delete" onclick="deleteTask(${task.id})">Delete</button>
-                    </td>
-                </tr>
-            `).join('');
-        } catch (error) {
-            tbody.innerHTML = '<tr><td colspan="5" class="empty-msg">Error connecting to backend API.</td></tr>';
+            tbody.innerHTML = tasks.map(task => {
+                const devIdBadge = task.developerProfile ? `<span class="dev-tag">Dev #${task.developerProfile.id}</span>` : '';
+                return `
+                    <tr>
+                        <td>#${task.id}</td>
+                        <td><strong>${escapeHtml(task.developerName)}</strong>${devIdBadge}</td>
+                        <td>${escapeHtml(task.taskName)}</td>
+                        <td>
+                            <span class="status-pill ${task.status === 'Completed' ? 'status-completed' : ''}">
+                                ${escapeHtml(task.status || '')}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn-edit" onclick="editTask(${task.id})">Edit</button>
+                            <button class="btn-delete" onclick="deleteTask(${task.id})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        } catch {
+            tbody.innerHTML = '<tr><td colspan="5" class="empty-msg">Error loading tasks from server.</td></tr>';
         }
     }
 
-    // 2. CREATE (POST) & 3. UPDATE (PUT)
+    // Live Keyword Search
+    function handleSearch() {
+        document.getElementById('statusFilter').value = '';
+        const keyword = document.getElementById('searchInput').value.trim();
+        if (!keyword) {
+            fetchTasks(API_URL);
+        } else {
+            fetchTasks(`${API_URL}/search?keyword=${encodeURIComponent(keyword)}`);
+        }
+    }
+
+    // Status Filter
+    function handleStatusFilter() {
+        document.getElementById('searchInput').value = '';
+        const status = document.getElementById('statusFilter').value;
+        if (!status) {
+            fetchTasks(API_URL);
+        } else {
+            fetchTasks(`${API_URL}/status?value=${encodeURIComponent(status)}`);
+        }
+    }
+
+    function clearFilters() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('statusFilter').value = '';
+        fetchTasks(API_URL);
+    }
+
+    // Create or Update
     document.getElementById('taskForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-
         const id = document.getElementById('taskId').value;
         const payload = {
             developerName: document.getElementById('developerName').value.trim(),
@@ -274,27 +224,16 @@
             status: document.getElementById('status').value
         };
 
-        if (id) {
-            // UPDATE existing task
-            await fetch(`${API_URL}/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-        } else {
-            // CREATE new task
-            await fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-        }
+        await fetch(id ? `${API_URL}/${id}` : API_URL, {
+            method: id ? 'PUT' : 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
 
         resetForm();
-        fetchTasks();
+        clearFilters();
     });
 
-    // Load single task into form for editing
     async function editTask(id) {
         const res = await fetch(`${API_URL}/${id}`);
         const task = await res.json();
@@ -304,10 +243,8 @@
         document.getElementById('taskName').value = task.taskName;
 
         const statusSelect = document.getElementById('status');
-        // Ensure current custom status exists in dropdown
         if (![...statusSelect.options].some(opt => opt.value === task.status)) {
-            const opt = new Option(task.status, task.status);
-            statusSelect.add(opt);
+            statusSelect.add(new Option(task.status, task.status));
         }
         statusSelect.value = task.status;
 
@@ -316,14 +253,10 @@
         document.getElementById('cancelBtn').style.display = 'inline-block';
     }
 
-    // 4. DELETE (DELETE)
     async function deleteTask(id) {
         if (!confirm(`Delete Task #${id} permanently from MySQL?`)) return;
-
-        await fetch(`${API_URL}/${id}`, {
-            method: 'DELETE'
-        });
-        fetchTasks();
+        await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+        clearFilters();
     }
 
     function resetForm() {
