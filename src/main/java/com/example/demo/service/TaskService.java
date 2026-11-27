@@ -43,7 +43,6 @@ public class TaskService {
             newTask.setStatus(developer.build());
         }
 
-        // Find existing DeveloperProfile or create a new one automatically
         if (newTask.getDeveloperName() != null && !newTask.getDeveloperName().isBlank()) {
             DeveloperProfile profile = profileRepository
                     .findByNameIgnoreCase(newTask.getDeveloperName().trim())
