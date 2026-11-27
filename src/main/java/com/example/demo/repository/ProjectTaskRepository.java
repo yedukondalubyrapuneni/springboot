@@ -8,12 +8,11 @@ import com.example.demo.model.ProjectTask;
 @Repository
 public interface ProjectTaskRepository extends JpaRepository<ProjectTask, Integer> {
 
-    // Generates: SELECT * FROM project_task WHERE developer_name = ?
+   
     List<ProjectTask> findByDeveloperName(String developerName);
 
-    // Generates: SELECT * FROM project_task WHERE status = ?
+
     List<ProjectTask> findByStatus(String status);
 
-    // Generates: SELECT * FROM project_task WHERE LOWER(task_name) LIKE LOWER('%keyword%')
     List<ProjectTask> findByTaskNameContainingIgnoreCase(String keyword);
 }
