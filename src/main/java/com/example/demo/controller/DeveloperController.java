@@ -58,4 +58,14 @@ public class DeveloperController {
                 ? "Task ID " + id + " deleted successfully!"
                 : "Task ID " + id + " not found.";
     }
+    @GetMapping("/tasks/search")
+    public List<ProjectTask> searchTasks(@org.springframework.web.bind.annotation.RequestParam String keyword) {
+        return taskService.searchTasksByKeyword(keyword);
+    }
+
+    
+    @GetMapping("/tasks/status")
+    public List<ProjectTask> filterByStatus(@org.springframework.web.bind.annotation.RequestParam String value) {
+        return taskService.getTasksByStatus(value);
+    }
 }
